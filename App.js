@@ -14,12 +14,38 @@ import { Provider } from 'react-redux';
 import store from './store'
 import HomeScreen from './screens/homeScreen'
 import axios from "axios";
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const AuthContext = React.createContext();
 
 const Tabs = createBottomTabNavigator();
+
+const AlertStack = createStackNavigator();
+
+const AlertStackScreen = ({route}) => {
+  const { token } = route.params;
+  return (
+    <AlertStack.Navigator>
+      <AlertStack.Screen
+      name="Alertas"
+      component={HomeScreen}
+      initialParams={{ token: token }}
+      options={{
+        title: 'Alertas',
+        headerStyle: {
+          backgroundColor: '#4169e1',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontSize: 23,
+          textAlign: 'center',
+        },
+      }}
+      />
+    </AlertStack.Navigator>
+  )
+}
 
 const createFirstAlert = () =>
     Alert.alert(
@@ -181,28 +207,23 @@ export default () => {
     []
   );
 
+
+
   return (
     <Provider store={store}>
       <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {/* <CompraStack.Navigator>
-          <CompraStack.Screen name="Compra" component={Ingreso} />
-          <CompraStack.Screen
-            name="BarcodeReader"
-            component={CompraScan}
-          />
-        </CompraStack.Navigator> */}
         <Tabs.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'Home1') {
-              iconName = 'cart-plus' ;
-            } else if (route.name === 'Home2') {
-              iconName = 'align-center';
-            } else if (route.name === 'SignIn') {
+            if (route.name === 'Alertas') {
+              iconName = 'home' ;
+            } else if (route.name === 'Perfil') {
               iconName = 'users';
+            } else if (route.name === 'Info') {
+              iconName = 'exclamation-circle';
             }
 
             // You can return any component that you like here!
@@ -237,8 +258,9 @@ export default () => {
           />
         ) : (
           <>
-            <Tabs.Screen name="Home1" component={HomeScreen} initialParams={{ token: state.userToken }}/>
-            <Tabs.Screen name="Home2" component={HomeScreen} initialParams={{ token: state.userToken }}/>
+            <Tabs.Screen name="Alertas" component={AlertStackScreen}  initialParams={{ token: state.userToken }}/>
+            <Tabs.Screen name="Perfil" component={AlertStackScreen} initialParams={{ token: state.userToken }}/>
+            <Tabs.Screen name="Info" component={AlertStackScreen} initialParams={{ token: state.userToken }}/>
           </>
         )}
         </Tabs.Navigator>
