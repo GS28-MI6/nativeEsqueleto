@@ -10,6 +10,8 @@ import { Icon } from 'react-native-vector-icons/FontAwesome';
 import { Policia } from '../assets/icons/Policia'
 import { connect } from 'react-redux';
 import { startCount, addOneToCount } from '../actions/postActions';
+import Geolocation from '@react-native-community/geolocation';
+import axios from 'axios'
 
 class homeScreen extends Component {
     
@@ -17,12 +19,43 @@ class homeScreen extends Component {
         super(props)
         this.props.startCount()
         this.changer = this.changer.bind(this)
+        this.state = {
+            ready: false,
+            where: {lat:null, lng:null},
+            error: null
+        }
+    }
+
+    componentDidMount(){
+        let geoOptions = {
+            enableHighAccuracy: true,
+            timeOut: 20000000,
+        };
+        this.setState({ready:false, error: null });
+        Geolocation.getCurrentPosition( this.geoSuccess, this.geoFailure, geoOptions);
+    }
+    geoSuccess = (position) => {
+        console.log(position.coords.latitude, "im position");
+        
+        this.setState({
+            ready:true,
+            where: {lat: position.coords.latitude,lng:position.coords.longitude }
+        })
+    }
+    geoFailure = (err) => {
+        console.log("there was an error", err)
+        this.setState({error: err.message});
     }
 
     changer() {
-        this.props.addOneToCount(this.props.count)
+        axios
+        .post('http://192.168.2.35:4000/testSsh')
+        .then((res) => {
+            console.log("im working")
+        })
     }
 render(){
+    console.log(this.state.where,"this is position")
     return (
         <View style={styles.container}>
             <View style={styles.pairBtn}>
