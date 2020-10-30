@@ -1,17 +1,18 @@
-import React, { Component , useState} from 'react'
+import React, { Component , useState} from 'react';
 import {
     View,
     Text,
     Image,
     TouchableOpacity,
     StyleSheet,
+    Alert
 } from 'react-native';
 import { Icon } from 'react-native-vector-icons/FontAwesome';
-import { Policia } from '../assets/icons/Policia'
+import { Policia } from '../assets/icons/Policia';
 import { connect } from 'react-redux';
 import { startCount, addOneToCount } from '../actions/postActions';
-import Geolocation from '@react-native-community/geolocation';
-import axios from 'axios'
+import Geolocation from 'react-native-geolocation-service';
+import axios from 'axios';
 
 class homeScreen extends Component {
     
@@ -26,42 +27,58 @@ class homeScreen extends Component {
         }
     }
 
-    componentDidMount(){
+    createTwoButtonAlert = () => {
+
         let geoOptions = {
             enableHighAccuracy: true,
-            timeOut: 20000000,
+            timeOut: 2000,
         };
-        this.setState({ready:false, error: null });
         Geolocation.getCurrentPosition( this.geoSuccess, this.geoFailure, geoOptions);
     }
+
+    componentDidMount(){
+        this.setState({ready:false, error: null });
+    }
     geoSuccess = (position) => {
-        console.log(position.coords.latitude, "im position");
-        
+        console.log("im in geo success")
         this.setState({
             ready:true,
             where: {lat: position.coords.latitude,lng:position.coords.longitude }
         })
+        Alert.alert(
+            "Coordenadas:",
+            "Lat " + this.state.where.lat + " Long: " + this.state.where.lng,
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
     }
     geoFailure = (err) => {
         console.log("there was an error", err)
         this.setState({error: err.message});
     }
-
+    
     changer() {
-        axios
-        .post('http://192.168.2.35:4000/testSsh')
-        .then((res) => {
-            console.log("im working")
-        })
+        let geoOptions = {
+            enableHighAccuracy: true,
+            timeOut: 2000,
+        };
+        Geolocation.getCurrentPosition( this.geoSuccess, this.geoFailure, geoOptions);
+        Alert.alert(this.state.where)
     }
 render(){
-    console.log(this.state.where,"this is position")
     return (
         <View style={styles.container}>
             <View style={styles.pairBtn}>
                 <View style={styles.singleBtn}>
                     <TouchableOpacity
-                    onPress={() => this.changer()}>
+                    onPress={() => this.createTwoButtonAlert()}>
                         <Image 
                         style={styles.tinyLogo}
                         source={require('../assets/icons/police.png')}
