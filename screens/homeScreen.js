@@ -75,73 +75,79 @@ class homeScreen extends Component {
 render(){
     return (
         <View style={styles.container}>
-            <View style={styles.pairBtn}>
-                <View style={styles.singleBtn}>
                     <TouchableOpacity
+                    style={styles.singleBtnPrevencion}
                     onPress={() => this.createTwoButtonAlert()}>
                         <Image 
                         style={styles.tinyLogo}
                         source={require('../assets/icons/police.png')}
                         />
+                        <View style={styles.pairBtn}>
+                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
+                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        </View>
                     </TouchableOpacity>
-                    <Text>Policia</Text>
-                </View>
-                <View style={styles.singleBtn}>
                     <TouchableOpacity
-                    onPress={() => this.changer()}>
+                    style={styles.singleBtn}
+                    onPress={() => this.createTwoButtonAlert()}>
                         <Image 
                         style={styles.tinyLogo}
                         source={require('../assets/icons/police.png')}
                         />
+                        <View style={styles.pairBtn}>
+                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
+                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        </View>
                     </TouchableOpacity>
-                    <Text>Policia</Text>
-                </View>
+                    <TouchableOpacity
+                    style={styles.singleBtn}
+                    onPress={() => this.createTwoButtonAlert()}>
+                        <Image 
+                        style={styles.tinyLogo}
+                        source={require('../assets/icons/police.png')}
+                        />
+                        <View style={styles.pairBtn}>
+                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
+                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={styles.singleBtn}
+                    onPress={() => this.createTwoButtonAlert()}>
+                        <Image 
+                        style={styles.tinyLogo}
+                        source={require('../assets/icons/police.png')}
+                        />
+                        <View style={styles.pairBtn}>
+                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
+                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={styles.singleBtn}
+                    onPress={() => this.createTwoButtonAlert()}>
+                        <Image 
+                        style={styles.tinyLogo}
+                        source={require('../assets/icons/police.png')}
+                        />
+                        <View style={styles.pairBtn}>
+                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
+                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={styles.singleBtn}
+                    onPress={() => this.createTwoButtonAlert()}>
+                        <Image 
+                        style={styles.tinyLogo}
+                        source={require('../assets/icons/police.png')}
+                        />
+                        <View style={styles.pairBtn}>
+                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
+                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        </View>
+                    </TouchableOpacity>
             </View>
-            <View style={styles.pairBtn}>
-                <View style={styles.singleBtn}>
-                    <TouchableOpacity
-                    onPress={() => this.changer()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
-                    </TouchableOpacity>
-                    <Text>Policia</Text>
-                </View>
-                <View style={styles.singleBtn}>
-                    <TouchableOpacity
-                    onPress={() => this.changer()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
-                    </TouchableOpacity>
-                    <Text>Policia</Text>
-                </View>
-            </View>
-            <View style={styles.pairBtn}>
-                <View style={styles.singleBtn}>
-                    <TouchableOpacity
-                    onPress={() => this.changer()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
-                    </TouchableOpacity>
-                    <Text>Policia</Text>
-                </View>
-                <View style={styles.singleBtn}>
-                    <TouchableOpacity
-                    onPress={() => this.changer()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
-                    </TouchableOpacity>
-                    <Text>Policia</Text>
-                </View>
-            </View>
-        </View>
     )
 }
 }
@@ -160,14 +166,29 @@ const styles = StyleSheet.create({
     },
     pairBtn: {
         display: "flex",
-        width: "80%",
-        flexDirection: "row",
-        justifyContent: "space-between",
+        width: "75%",
+        paddingLeft: "5%",
+        height: 100,
+        flexDirection: "column",
+        alignItems: "flex-start",
     },
     singleBtn: {
         display: "flex",
-        justifyContent: "center",
+        height: 100,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
         alignItems: "center",
+        backgroundColor: "lightcoral",
+        width: "100%",
+    },
+    singleBtnPrevencion: {
+        display: "flex",
+        height: 100,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        backgroundColor: "lightgreen",
+        width: "100%",
     },
     btn: {
         backgroundColor: '#b0c4de',
@@ -180,8 +201,29 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     tinyLogo: {
-        width: 100,
-        height: 100
+        width: 80,
+        height: 80
+    },
+    textTitle:{
+        color: "white",
+        fontSize: 15,
+    },
+    textAlert:{
+        color: "white",
+        fontSize: 30,
+    },
+    viewTitle: {
+        display:"flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height:30,
+        fontSize: 20,
+    },
+    viewAlert: {
+        display:"flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height:70,
     }
 })
 
