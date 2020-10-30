@@ -114,7 +114,7 @@ export default () => {
       console.log(state.authToken)
       console.log("trying to recover token")
       token = await AsyncStorage.getItem('userToken');
-      axios.post("http://177.71.157.129:4000/tokenAuth", {token})
+      axios.post("http://18.230.143.84:4000/tokenAuth", {token})
           .then(res => {
             if (res.status === 200){
               console.log("status is 200")
@@ -172,14 +172,14 @@ export default () => {
     );
   }
 
-  const axioser = (usuario, contraseña) => {
+  const axioser = (email, password) => {
     console.log("hi im in axios")
     axios
-          .post("http://177.71.157.129:4000/client_auth", {usuario, contraseña})
+          .post("http://18.230.143.84:4000/client_auth", {email, password})
           .then(response => {
             console.log(response.data)
             var token = response.data 
-            axios.post("http://177.71.157.129:4000/tokenAuth", {token})
+            axios.post("http://18.230.143.84:4000/tokenAuth", {token})
             .then(res => {
               if (res.status === 200){
                 console.log("status is 200")
