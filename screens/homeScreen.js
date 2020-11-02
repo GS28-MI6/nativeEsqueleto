@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import { startCount, addOneToCount } from '../actions/postActions';
 import Geolocation from 'react-native-geolocation-service';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import jwt_decode from "jwt-decode";
 
 class homeScreen extends Component {
     
@@ -39,12 +41,15 @@ class homeScreen extends Component {
     componentDidMount(){
         this.setState({ready:false, error: null });
     }
-    geoSuccess = (position) => {
+    geoSuccess = async (position) => {
         console.log("im in geo success")
         this.setState({
             ready:true,
             where: {lat: position.coords.latitude,lng:position.coords.longitude }
         })
+        var token = await AsyncStorage.getItem('userToken');
+        var decript = jwt_decode(token);
+        console.log(decript)
         Alert.alert(
             "Coordenadas:",
             "Lat " + this.state.where.lat + " Long: " + this.state.where.lng,
@@ -76,12 +81,28 @@ render(){
     return (
         <View style={styles.container}>
                     <TouchableOpacity
-                    style={styles.singleBtnPrevencion}
+                    style={styles.singleBtn}
                     onPress={() => this.createTwoButtonAlert()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
+                        <View style={styles.logoViewPrevencion}>
+                            <Image 
+                            style={styles.tinyLogo}
+                            source={require('../assets/icons/police.png')}
+                            />
+                        </View>
+                        <View style={styles.pairBtn}>
+                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Preveon</Text></View>
+                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={styles.singleBtn}
+                    onPress={() => this.createTwoButtonAlert()}>
+                        <View style={styles.logoView}>
+                            <Image 
+                            style={styles.tinyLogo}
+                            source={require('../assets/icons/police.png')}
+                            />
+                        </View>
                         <View style={styles.pairBtn}>
                             <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
                             <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
@@ -90,10 +111,12 @@ render(){
                     <TouchableOpacity
                     style={styles.singleBtn}
                     onPress={() => this.createTwoButtonAlert()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
+                        <View style={styles.logoView}>
+                            <Image 
+                            style={styles.tinyLogo}
+                            source={require('../assets/icons/police.png')}
+                            />
+                        </View>
                         <View style={styles.pairBtn}>
                             <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
                             <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
@@ -102,10 +125,12 @@ render(){
                     <TouchableOpacity
                     style={styles.singleBtn}
                     onPress={() => this.createTwoButtonAlert()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
+                        <View style={styles.logoView}>
+                            <Image 
+                            style={styles.tinyLogo}
+                            source={require('../assets/icons/police.png')}
+                            />
+                        </View>
                         <View style={styles.pairBtn}>
                             <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
                             <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
@@ -114,10 +139,12 @@ render(){
                     <TouchableOpacity
                     style={styles.singleBtn}
                     onPress={() => this.createTwoButtonAlert()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
+                        <View style={styles.logoView}>
+                            <Image 
+                            style={styles.tinyLogo}
+                            source={require('../assets/icons/police.png')}
+                            />
+                        </View>
                         <View style={styles.pairBtn}>
                             <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
                             <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
@@ -126,22 +153,12 @@ render(){
                     <TouchableOpacity
                     style={styles.singleBtn}
                     onPress={() => this.createTwoButtonAlert()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
-                        <View style={styles.pairBtn}>
-                            <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
-                            <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
+                        <View style={styles.logoView}>
+                            <Image 
+                            style={styles.tinyLogo}
+                            source={require('../assets/icons/police.png')}
+                            />
                         </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    style={styles.singleBtn}
-                    onPress={() => this.createTwoButtonAlert()}>
-                        <Image 
-                        style={styles.tinyLogo}
-                        source={require('../assets/icons/police.png')}
-                        />
                         <View style={styles.pairBtn}>
                             <View style={styles.viewTitle}><Text style={styles.textTitle}>Prevencion</Text></View>
                             <View style={styles.viewAlert}><Text style={styles.textAlert}>Ojos en alerta</Text></View>
@@ -161,34 +178,28 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flex: 1,
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         alignItems: "center",
     },
     pairBtn: {
         display: "flex",
         width: "75%",
         paddingLeft: "5%",
-        height: 100,
+        flex: 1,
         flexDirection: "column",
         alignItems: "flex-start",
     },
     singleBtn: {
         display: "flex",
-        height: 100,
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
-        backgroundColor: "lightcoral",
+        backgroundColor: "steelblue",
         width: "100%",
-    },
-    singleBtnPrevencion: {
-        display: "flex",
-        height: 100,
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        backgroundColor: "lightgreen",
-        width: "100%",
+        borderColor: "white",
+        borderStyle: "solid",
+        borderTopWidth: 2,
     },
     btn: {
         backgroundColor: '#b0c4de',
@@ -201,8 +212,30 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     tinyLogo: {
-        width: 80,
-        height: 80
+        width: "100%",
+        height: "100%",
+    },
+    logoViewPrevencion:{
+        marginLeft: 5,
+        height: "75%",
+        width: "20%",
+        borderColor: "rebeccapurple",
+        borderStyle: "solid",
+        borderWidth: 2,
+        borderRadius: 2000,
+        overflow: "hidden",
+        backgroundColor: "springgreen"
+    },
+    logoView:{
+        marginLeft: 5,
+        height: "75%",
+        width: "20%",
+        borderColor: "rebeccapurple",
+        borderStyle: "solid",
+        borderWidth: 2,
+        borderRadius: 2000,
+        overflow: "hidden",
+        backgroundColor: "tomato"
     },
     textTitle:{
         color: "white",
